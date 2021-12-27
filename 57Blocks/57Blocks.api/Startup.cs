@@ -11,6 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using _57Blocks.api.DataBase;
+using MediatR;
+using System.Reflection;
 
 namespace _57Blocks.api
 {
@@ -27,11 +31,16 @@ namespace _57Blocks.api
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBContext")), ServiceLifetime.Transient, ServiceLifetime.Transient);
+
             services.AddControllers();
+            //services.AddScoped<DBContext>(provider => provider.GetService<DBContext>());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "_57Blocks.api", Version = "v1" });
             });
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
