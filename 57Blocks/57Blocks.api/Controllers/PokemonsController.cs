@@ -13,23 +13,17 @@ namespace _57Blocks.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class PokemonsController : ControllerBase
     {
         private IMediator _mediator;
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
-        [HttpPost]
-        [Route("Login")]
-        public async Task<IActionResult> Login(LoginCommand request)
+        [HttpGet]
+        [Route("GetPublicPokemons")]
+        [_57BlocksAuthorize]
+        public async Task<IActionResult> GetPublicPokemons()
         {
-            return Ok(await Mediator.Send(request));
-        }
-
-        [HttpPost]
-        [Route("Register")]
-        public async Task<IActionResult> Register(RegistrationCommand request)
-        {
-            return Ok(await Mediator.Send(request));
+            return Ok(await Mediator.Send(new GetPublicPokemonsCommand()));
         }
     }
 }
