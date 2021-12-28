@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using _57Blocks.api.Utils;
 
 namespace _57Blocks.api.Controllers
 {
@@ -26,13 +27,14 @@ namespace _57Blocks.api.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public ActionResult<string> Login(string parameter)
+        public async Task<IActionResult> Login(LoginCommand request)
         {
-            return "OK";
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpGet]
         [Route("GetPublicPokemons")]
+        [_57BlocksAuthorize]
         public async Task<IActionResult> GetPublicPokemons()
         {
             return Ok(await Mediator.Send(new GetPublicPokemonsCommand()));

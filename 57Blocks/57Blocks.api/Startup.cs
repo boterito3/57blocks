@@ -15,6 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using _57Blocks.api.DataBase;
 using MediatR;
 using System.Reflection;
+using _57Blocks.api.Utils;
+using _57Blocks.api.Interfaces;
 
 namespace _57Blocks.api
 {
@@ -33,11 +35,36 @@ namespace _57Blocks.api
 
             services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBContext")), ServiceLifetime.Transient, ServiceLifetime.Transient);
 
+            services.AddTransient<I57BlocksSecurityService, _57BlocksSecurityService>();
+
+            services.AddTransient<IValidationService, ValidationService>();
+
             services.AddControllers();
-            //services.AddScoped<DBContext>(provider => provider.GetService<DBContext>());
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "_57Blocks.api", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
             });
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
@@ -46,18 +73,20 @@ namespace _57Blocks.api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "_57Blocks.api v1"));
-            }
+           
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "_57Blocks.api v1"));
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<JwtMiddleware>();
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
