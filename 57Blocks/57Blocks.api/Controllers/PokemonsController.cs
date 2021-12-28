@@ -27,5 +27,12 @@ namespace _57Blocks.api.Controllers
         {
             return Ok(await Mediator.Send(new GetPublicPokemonsCommand()));
         }
+
+        [HttpGet]
+        [Route("GetPrivatePokemons")]
+        public async Task<IActionResult> GetPrivatePokemons()
+        {
+            return Ok(await Mediator.Send(new GetPrivatePokemonsCommand()));
+        }
     }
 }

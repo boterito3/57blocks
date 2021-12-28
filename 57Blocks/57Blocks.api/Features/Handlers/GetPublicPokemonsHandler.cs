@@ -15,13 +15,11 @@ namespace _57Blocks.api.Features.Handlers
     public class GetPublicPokemonsHandler : IRequestHandler<GetPublicPokemonsCommand, IEnumerable<Pokemon>>
     {
         private DBContext _context;
-        private User _authentiCatedUser;
-        public GetPublicPokemonsHandler(DBContext context, IUserContext userContext)
+        public GetPublicPokemonsHandler(DBContext context)
         {
             _context = context;
-            _authentiCatedUser = userContext.GetAuthenticatedUser();
-            
         }
+
         public async Task<IEnumerable<Pokemon>> Handle(GetPublicPokemonsCommand request, CancellationToken cancellationToken)
         {
             var pokemons = await _context.Pokemons.Where(x => x.IsPublic).ToListAsync();
