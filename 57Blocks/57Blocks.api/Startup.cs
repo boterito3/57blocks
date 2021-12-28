@@ -39,6 +39,8 @@ namespace _57Blocks.api
 
             services.AddTransient<IValidationService, ValidationService>();
 
+            services.AddTransient<IUserContext, UserContext>();
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
@@ -68,6 +70,8 @@ namespace _57Blocks.api
             });
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

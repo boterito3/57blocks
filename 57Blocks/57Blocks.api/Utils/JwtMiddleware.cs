@@ -34,8 +34,10 @@ namespace _57Blocks.api.Utils
 
                 var userId = sostySecurityService.ValidateJwtToken(token);
 
+                var user = dbContext.Users.Where(x => x.UserId == userId).First();
+
                 // attach user to context on successful jwt validation
-                context.Items["User"] = dbContext.Users.Where(x => x.UserId == userId).First();
+                context.Items["User"] = user;
             }
             catch
             {
