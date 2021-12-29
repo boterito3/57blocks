@@ -31,5 +31,12 @@ namespace _57Blocks.api.Controllers
         {
             return Ok(await Mediator.Send(request));
         }
+
+        [HttpGet]
+        [Route("GenerateRandomNumber")]
+        public async Task<IActionResult> GenerateRandomNumber()
+        {
+            return Ok(await Mediator.Send(new GenerateRandomNumberCommand()));
+        }
     }
 }
