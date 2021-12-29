@@ -34,5 +34,12 @@ namespace _57Blocks.api.Controllers
         {
             return Ok(await Mediator.Send(new GetPrivatePokemonsCommand()));
         }
+
+        [HttpPost]
+        [Route("SavePokemon")]
+        public async Task<IActionResult> SavePokemon(SavePokemonCommand request)
+        {
+            return Ok(await Mediator.Send(request));
+        }
     }
 }
