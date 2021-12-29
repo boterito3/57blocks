@@ -80,7 +80,7 @@ namespace _57Blocks.api
            
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "_57Blocks.api v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pokemons API v1"));
 
             app.UseHttpsRedirection();
 

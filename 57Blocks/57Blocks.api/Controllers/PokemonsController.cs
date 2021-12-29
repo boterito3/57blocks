@@ -41,5 +41,12 @@ namespace _57Blocks.api.Controllers
         {
             return Ok(await Mediator.Send(request));
         }
+
+        [HttpPost]
+        [Route("DeletePokemon")]
+        public async Task<IActionResult> DeletePokemon(DeletePokemonCommand request)
+        {
+            return Ok(await Mediator.Send(request));
+        }
     }
 }

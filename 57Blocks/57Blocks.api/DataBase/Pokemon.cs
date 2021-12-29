@@ -16,6 +16,7 @@ namespace _57Blocks.api.DataBase
         public Guid CreatedBy { get; set; }
         public string Description { get; set; }
         public bool IsPublic { get; set; }
+        public DateTime? DeleteDate { get; set; }
 
     }
 }

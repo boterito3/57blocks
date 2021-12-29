@@ -22,7 +22,7 @@ namespace _57Blocks.api.Features.Handlers
 
         public async Task<IEnumerable<Pokemon>> Handle(GetPublicPokemonsCommand request, CancellationToken cancellationToken)
         {
-            var pokemons = await _context.Pokemons.Where(x => x.IsPublic).ToListAsync();
+            var pokemons = await _context.Pokemons.Where(x => x.DeleteDate == null && x.IsPublic).ToListAsync();
             return pokemons;
         }
     }

@@ -21,7 +21,6 @@ namespace _57Blocks.api.Features.Handlers
         {
             _context = context;
             _authenticatedUser = userContext.GetAuthenticatedUser();
-            
         }
 
         public async Task<Pokemon> Handle(SavePokemonCommand request, CancellationToken cancellationToken)
@@ -32,7 +31,7 @@ namespace _57Blocks.api.Features.Handlers
             if (string.IsNullOrEmpty(request.Pokemon.Description))
                 throw new ValidationException("Pokemon description is mandatory");
 
-            Pokemon pokemon = await _context.Pokemons.Where(x => x.PokemonId == request.Pokemon.PokemonId).FirstOrDefaultAsync();
+            Pokemon pokemon = await _context.Pokemons.Where(x => x.DeleteDate == null && x.PokemonId == request.Pokemon.PokemonId).FirstOrDefaultAsync();
 
             if (pokemon != null)
             {

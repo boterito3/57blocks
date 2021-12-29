@@ -25,7 +25,7 @@ namespace _57Blocks.api.Features.Handlers
 
         public async Task<IEnumerable<Pokemon>> Handle(GetPrivatePokemonsCommand request, CancellationToken cancellationToken)
         {
-            var pokemons = await _context.Pokemons.Where(x => !x.IsPublic && x.CreatedBy == _authenticatedUser.UserId).ToListAsync();
+            var pokemons = await _context.Pokemons.Where(x => x.DeleteDate == null && !x.IsPublic && x.CreatedBy == _authenticatedUser.UserId).ToListAsync();
             return pokemons;
         }
     }
