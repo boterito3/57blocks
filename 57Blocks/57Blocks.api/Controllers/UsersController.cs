@@ -1,5 +1,4 @@
-﻿using _57Blocks.api.Features.Commands;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,7 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using _57Blocks.api.Utils;
+using _57Blocks.domain.Utils;
+using _57Blocks.domain.Features.Commands;
 
 namespace _57Blocks.api.Controllers
 {

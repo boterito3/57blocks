@@ -12,11 +12,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using _57Blocks.api.DataBase;
+using _57Blocks.domain.DataBase;
 using MediatR;
 using System.Reflection;
-using _57Blocks.api.Utils;
-using _57Blocks.api.Interfaces;
+using _57Blocks.domain.Utils;
+using _57Blocks.domain.Interfaces;
 
 namespace _57Blocks.api
 {
@@ -45,7 +45,7 @@ namespace _57Blocks.api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "_57Blocks.api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pokemons API v1", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -69,7 +69,7 @@ namespace _57Blocks.api
                 });
             });
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(AppDomain.CurrentDomain.Load("57Blocks.domain"));
 
             services.AddHttpContextAccessor();
         }
